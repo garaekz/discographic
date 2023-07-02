@@ -27,7 +27,7 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
         
     - name: Run tests
-      run: ./vendor/bin/pest --coverage=xml --coverage-xml=coverage.xml
+      run: ./vendor/bin/pest --coverage-clover=coverage.xml
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
