@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Genre;
 use App\Http\Requests\StoreGenreRequest;
 use App\Http\Requests\UpdateGenreRequest;
+use Inertia\Inertia;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class GenreController extends Controller
 {
@@ -13,7 +15,16 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        $data = QueryBuilder::for(Genre::class)
+            ->allowedFilters(['name', 'slug'])
+            ->allowedSorts(['name', 'slug'])
+            ->allowedFields(['name', 'slug'])
+            ->paginate();
+
+        return Inertia::render('Genres/Index', [
+            'filters' => request()->all('search', 'trashed'),
+            'genres' => $data,
+        ]);
     }
 
     /**
