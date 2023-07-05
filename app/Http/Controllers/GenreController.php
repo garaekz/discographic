@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Actions\SaveGenreAction;
 use App\Models\Genre;
-use App\Http\Requests\StoreGenreRequest;
-use App\Http\Requests\UpdateGenreRequest;
+use App\Http\Requests\Genre\StoreGenreRequest;
+use App\Http\Requests\Genre\UpdateGenreRequest;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\QueryBuilder;
 

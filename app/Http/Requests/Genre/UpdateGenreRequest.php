@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Genre;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGenreRequest extends FormRequest
+class UpdateGenreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,10 @@ class StoreGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:genres,name'],
-            'description' => ['nullable', 'string'],
-            'color' => ['nullable', 'string', 'max:255'],
+            'name' => 'sometimes|nullable|string|max:255|unique:genres,name,' . $this->genre->id,
+            'description' => 'nullable|string',
+            'color' => 'nullable|string|max:255',
+            'slug' => 'sometimes|nullable|string|max:255|unique:genres,slug,' . $this->genre->id,
         ];
     }
 }
