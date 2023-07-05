@@ -33,7 +33,7 @@ class ArtistController extends Controller
      */
     public function store(StoreArtistRequest $request, SaveArtistAction $action)
     {
-        $artist = $action->execute(new Artist(), $request->validated());
+        $action->execute(new Artist(), $request->validated());
 
         return redirect()->route('artists.index')->with('success', 'Artist created successfully');
     }

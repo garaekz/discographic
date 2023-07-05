@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\GenreController;
 use Illuminate\Foundation\Application;
@@ -37,4 +38,5 @@ Route::middleware([
 
     Route::apiResource('genres', GenreController::class);
     Route::apiResource('artists', ArtistController::class);
+    Route::apiResource('albums', AlbumController::class);
 });
