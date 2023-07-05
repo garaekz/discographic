@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\GenreController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::apiResource('genres', GenreController::class);
+    Route::apiResource('artists', ArtistController::class);
 });
