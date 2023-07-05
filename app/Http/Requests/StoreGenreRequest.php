@@ -11,7 +11,7 @@ class StoreGenreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255', 'unique:genres,name'],
+            'description' => ['nullable', 'string'],
+            'color' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

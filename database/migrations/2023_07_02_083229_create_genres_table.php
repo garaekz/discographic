@@ -18,6 +18,7 @@ return new class () extends Migration {
               ->unique();
             $table->string('color');
             $table->string('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

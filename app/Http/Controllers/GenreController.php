@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\SaveGenreAction;
 use App\Models\Genre;
 use App\Http\Requests\StoreGenreRequest;
 use App\Http\Requests\UpdateGenreRequest;
@@ -30,9 +31,10 @@ class GenreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGenreRequest $request)
+    public function store(StoreGenreRequest $request, SaveGenreAction $action)
     {
-        //
+        $action->execute(new Genre(), $request->validated());
+        return redirect()->route('genres.index')->with('success', 'Genre created successfully');
     }
 
     /**
@@ -40,15 +42,18 @@ class GenreController extends Controller
      */
     public function show(Genre $genre)
     {
-        //
+        return Inertia::render('Genres/Show', [
+            'genre' => $genre,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGenreRequest $request, Genre $genre)
+    public function update(UpdateGenreRequest $request, Genre $genre, SaveGenreAction $action)
     {
-        //
+        $action->execute($genre, $request->validated());
+        return redirect()->route('genres.index')->with('success', 'Genre updated successfully');
     }
 
     /**
@@ -56,6 +61,7 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+        $genre->delete();
+        return redirect()->route('genres.index')->with('success', 'Genre deleted successfully');
     }
 }
