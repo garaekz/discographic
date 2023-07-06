@@ -2,6 +2,7 @@
 
 use Inertia\Testing\AssertableInertia as Assert;
 use App\Models\Artist;
+use App\Models\Genre;
 use App\Models\User;
 
 beforeEach(function () {
@@ -29,7 +30,10 @@ it('renders the index page', function () {
 });
 
 it('creates a new artist', function () {
-    $artist = Artist::factory()->make();
+    $genres = Genre::factory()->count(3)->create();
+    $artist = Artist::factory()->make([
+        'genres' => $genres->pluck('id')->toArray(),
+    ]);
 
     $this->actingAs($this->user)
         ->post(route('artists.store'), $artist->toArray())

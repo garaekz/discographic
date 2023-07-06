@@ -18,9 +18,4 @@ class Genre extends Model
       'description',
       'color',
     ];
-
-    public function artists(): MorphToMany
-    {
-        return $this->morphedByMany(Artist::class, 'genreable');
-    }
 }
