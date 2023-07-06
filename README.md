@@ -1,18 +1,18 @@
 # 📀 Discographic
 
 <p align="center">
-<a href="https://github.com/garaekz/discographic/actions"><img src="https://github.com/garaekz/discographic/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/garaekz/discographic/actions"><img src="https://github.com/garaekz/discographic/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
+<a href="https://codecov.io/gh/garaekz/discographic" > 
+ <img src="https://codecov.io/gh/garaekz/discographic/branch/master/graph/badge.svg?token=M1W0EHU8LE"/> 
+ </a>
 </p>
 
 ## Table of Contents
 
 - [About Discographic](#about-discographic)
 - [Tech Stack](#tech-stack)
-- [Learning Discographic](#learning-discographic)
 - [Contributing](#contributing)
-- [Code of Conduct](#code-of-conduct)
 - [Security Vulnerabilities](#security-vulnerabilities)
-- [License](#license)
 - [Future Features](#future-features)
 
 ## About Discographic
