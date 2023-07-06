@@ -17,9 +17,9 @@ it('returns genres table', function () {
                 'genres.data',
                 3,
                 fn (Assert $page) => $page
-                ->where('id', $genres->first()->id)
-                ->where('name', $genres->first()->name)
-                ->where('slug', $genres->first()->slug)
+                ->where('id', $genres->last()->id)
+                ->where('name', $genres->last()->name)
+                ->where('slug', $genres->last()->slug)
                 ->etc()
             )
         );
