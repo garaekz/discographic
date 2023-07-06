@@ -1,66 +1,56 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📀 Discographic
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://github.com/garaekz/discographic/actions"><img src="https://github.com/garaekz/discographic/workflows/tests/badge.svg" alt="Build Status"></a>
 </p>
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [About Discographic](#about-discographic)
+- [Tech Stack](#tech-stack)
+- [Learning Discographic](#learning-discographic)
+- [Contributing](#contributing)
+- [Code of Conduct](#code-of-conduct)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [License](#license)
+- [Future Features](#future-features)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## About Discographic
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+🎵 Discographic is a comprehensive web application carefully crafted with Laravel, Vue, and TailwindCSS, tailored for record labels and music distributors. It centralizes the information of artists, genres, albums, tracks, shows, and news, integrating data from various music platforms and social networks into a single, user-friendly interface.
 
-## Learning Laravel
+Our application provides the links to albums or tracks available on different music platforms, thereby ensuring all relevant details about your music are accessible from one place. Moreover, Discographic upholds best practices in software development, leveraging reusable components, and a solid TDD approach. Each line of code has been meticulously written and tested, aiming to ensure reliability and ease of use.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tech Stack
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+💻 Discographic is built with a potent blend of cutting-edge technologies and libraries that enhance its features:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- [Laravel](https://laravel.com/): for crafting the application's backend with elegance.
+- [Vue 3](https://vuejs.org/): for building a dynamic and responsive frontend.
+- [TailwindCSS](https://tailwindcss.com/): for a sleek, customizable UI design.
+- [Pest](https://pestphp.com/): for robust testing to ensure the highest quality of code.
+- [Spatie Query Builder](https://spatie.be/docs/laravel-query-builder/v3/introduction): for efficient, readable, and dynamic queries.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+💡 Contributions to Discographic are welcome and greatly appreciated! If you're interested in contributing, please read our [contribution guide](CONTRIBUTING.md).
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+🔒 If you discover a security vulnerability within Discographic, please send an e-mail to Our Team via [garaekz@gmail.com](mailto:garaekz@gmail.com). All security vulnerabilities will be promptly addressed.
 
-## License
+## Future Features
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+🔮 Here are some awesome features we are thinking will be great to add but some user input would be needed, feel free to propose any other features you think would be great to have:
+
+- [ ] Real-time notifications for new releases
+- [ ] Advanced analytics for track popularity and listener demographics
+- [ ] Integration with more music platforms and social networks
+- [ ] Publish to multiple platforms all centralized
+- [ ] Social media scheduling and post analytics
+- [ ] In-app communication tools for teams and artists
+- [ ] Customizable artist pages with themes and layouts
+- [ ] Mobile app version for on-the-go management
+- [ ] Integration with concert ticket platforms
+- [ ] Automated marketing campaigns based on listener behavior and preferences
+- [ ] Multilingual support to cater to a global audience
