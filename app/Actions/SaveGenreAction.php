@@ -13,7 +13,9 @@ class SaveGenreAction
             $color = dechex(rand(0x000000, 0xFFFFFF));
             $data['color'] = '#' . $color;
         }
-        $data['slug'] = Str::slug($data['name']);
+        if (!isset($data['slug'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
         $genre->fill($data);
         $genre->save();
 

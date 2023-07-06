@@ -20,6 +20,7 @@ class GenreController extends Controller
             ->allowedFilters(['name', 'slug'])
             ->allowedSorts(['name', 'slug'])
             ->allowedFields(['name', 'slug'])
+            ->defaultSort('-id')
             ->paginate();
 
         return Inertia::render('Genres/Index', [
