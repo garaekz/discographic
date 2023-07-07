@@ -4,10 +4,11 @@ on:
   push:
     branches: 
       - master
-      - ci
+      - develop
   pull_request:
     branches: 
       - master
+      - develop
 
 jobs:
   build:
