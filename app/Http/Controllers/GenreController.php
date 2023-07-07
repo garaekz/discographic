@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\SaveGenreAction;
+use App\Filters\SearchFilter;
 use App\Models\Genre;
 use App\Http\Requests\Genre\StoreGenreRequest;
 use App\Http\Requests\Genre\UpdateGenreRequest;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class GenreController extends Controller
@@ -17,9 +19,9 @@ class GenreController extends Controller
     public function index()
     {
         $data = QueryBuilder::for(Genre::class)
-            ->allowedFilters(['name', 'slug'])
-            ->allowedSorts(['name', 'slug'])
-            ->allowedFields(['name', 'slug'])
+            ->allowedFilters(
+                AllowedFilter::custom('search', new SearchFilter(), 'name,slug')
+            )
             ->defaultSort('-id')
             ->paginate();
 
