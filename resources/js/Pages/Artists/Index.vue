@@ -1,7 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { ColorPicker } from 'vue-color-kit'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { toast } from 'vue3-toastify';
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { useForm } from '@inertiajs/vue3';
@@ -9,6 +7,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import ArtistTable from '@/Components/Artists/ArtistTable.vue';
 import ConfirmationModal from '@/Components/Shared/ConfirmationModal.vue';
 import SlideOutPanel from '@/Components/Shared/SlideOutPanel.vue';
+import RichEditor from '@/Components/Shared/RichEditor.vue';
 
 defineProps({
     artists: Object,
@@ -131,6 +130,9 @@ const confirmDelete = async (id) => {
                     </label>
                     <input type="text" id="slug" v-model="form.region"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div>
+                    <RichEditor />
                 </div>
                 <div class="flex justify-between">
                     <button type="button" @click="handleSlideoutClose"
