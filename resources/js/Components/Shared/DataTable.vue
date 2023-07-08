@@ -3,13 +3,18 @@ import { ref } from 'vue';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import Paginator from './Paginator.vue';
 
+type Column = {
+  key: string;
+  label: string;
+};
+
 defineProps({
   data: {
     type: Object,
     required: true,
   },
   columns: {
-    type: Array,
+    type: Array as () => Column[],
     required: true,
   },
   hasActions: {

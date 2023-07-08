@@ -29,11 +29,19 @@ const columns = [
     },
     {
         key: 'name',
-        label: 'Genre',
+        label: 'Artist',
     },
     {
-        key: 'color',
-        label: 'Color',
+        key: 'region',
+        label: 'Region',
+    },
+    {
+        key: 'excerpt',
+        label: 'Excerpt',
+    },
+    {
+        key: 'links',
+        label: 'Links',
     },
     {
         key: 'created_at',
@@ -58,7 +66,7 @@ const onPageChange = (query) => {
     <DataTable 
         :data="data"
         :columns="columns"
-        createLabel="Add Genre"
+        createLabel="Add New Artist"
         @table:search="onSearch"
         @table:page-change="onPageChange"
         @table:creating="emit('table:creating')"
