@@ -9,17 +9,24 @@ import { CodeBlock } from '@tiptap/extension-code-block';
 import { mergeAttributes } from '@tiptap/core'
 import { CodeBracketIcon } from '@heroicons/vue/24/outline';
 
-// defineProps({
-//     modelValue: {
-//         type: String | null,
-//         required: true,
-//     },
-// });
+const props = defineProps({
+    modelValue: {
+        type: String,
+        default: ''
+    }
+});
+
+const emits = defineEmits(['update:modelValue'])
 
 let editor = ref(null);
 
 onMounted(() => {
     editor.value = new Editor({
+        content: props.modelValue,
+        onUpdate: ({ editor }) => {
+            let content = editor.getHTML()
+            emits('update:modelValue', content)
+        },
         editorProps: {
             attributes: {
                 class: 'focus:outline-none block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400',

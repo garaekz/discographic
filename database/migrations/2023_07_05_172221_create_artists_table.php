@@ -16,7 +16,8 @@ return new class () extends Migration {
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->string('region')->nullable();
-            $table->string('bio')->nullable();
+            $table->text('bio')->nullable();
+            $table->text('excerpt')->nullable();
             $table->json('links')->nullable();
             $table->softDeletes();
             $table->timestamps();
