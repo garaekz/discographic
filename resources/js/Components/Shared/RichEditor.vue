@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import StarterKit from '@tiptap/starter-kit';
 import { Editor, EditorContent } from '@tiptap/vue-3';
@@ -29,20 +29,22 @@ onMounted(() => {
         },
         editorProps: {
             attributes: {
-                class: 'focus:outline-none block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400',
+                class: 'focus:outline-none block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 h-36 max-h-36 overflow-y-auto',
             },
         },
         extensions: [
-            StarterKit,
-            Blockquote.configure({
-                HTMLAttributes: {
-                    class: 'border-l-4 border-gray-300 dark:border-gray-600 pl-4',
+            StarterKit.configure({
+                blockquote: {
+                    HTMLAttributes: {
+                        class: 'border-l-4 border-gray-300 dark:border-gray-600 pl-4',
+                    },
                 },
-            }),
-            CodeBlock.configure({
-                HTMLAttributes: {
-                    class: 'bg-gray-100 dark:bg-gray-700 text-sm text-gray-900 dark:text-gray-300 p-2 rounded-lg',
+                codeBlock: {
+                    HTMLAttributes: {
+                        class: 'bg-gray-100 dark:bg-gray-700 text-sm text-gray-900 dark:text-gray-300 p-2 rounded-lg',
+                    },
                 },
+                heading: false,
             }),
             Heading.extend({
                 levels: [1, 2, 3, 4, 5],
@@ -72,11 +74,9 @@ onMounted(() => {
     });
 });
 
-onBeforeMount(async () => {
-    if (editor.value) {
-        await editor.destroy()
-    }
-})
+onBeforeUnmount(() => {
+    editor.value.destroy();
+});
 </script>
 <template>
     <div v-if="editor">
@@ -107,7 +107,7 @@ onBeforeMount(async () => {
                                 <MenuItems
                                     class="absolute left-0 mt-2 w-56 origin-top-right text-base list-none bg-white divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-md ring-black ring-opacity-5 focus:outline-none">
                                     <MenuItem v-slot="{ active }">
-                                    <button :class="[
+                                    <button @click="editor.chain().focus().setParagraph().run()" :class="[
                                         active ? 'bg-gray-100 dark:bg-gray-600 dark:text-white text-gray-900' : 'text-gray-900 dark:text-white',
                                         'group flex w-full items-center rounded-md px-2 py-2',
                                     ]">
@@ -196,7 +196,7 @@ onBeforeMount(async () => {
                             <span class="sr-only">Blockquote</span>
                         </button>
                         <button @click="editor.chain().focus().toggleCodeBlock().run()"
-                            :class="{ 'bg-gray-100 dark:bg-gray-600 dark:text-white text-gray-900': editor.isActive('codeblock') }"
+                            :class="{ 'bg-gray-100 dark:bg-gray-600 dark:text-white text-gray-900': editor.isActive('codeBlock') }"
                             class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                             <CodeBracketIcon class="w-5 h-5" />
                             <span class="sr-only">Code Block</span>
@@ -207,9 +207,6 @@ onBeforeMount(async () => {
             <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
                 <label for="editor" class="sr-only">Publish post</label>
                 <editor-content :editor="editor" />
-                <!-- <textarea id="editor" rows="8"
-                    class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                    placeholder="Write an article..." required></textarea> -->
             </div>
         </div>
 
