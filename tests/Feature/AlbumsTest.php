@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature;
+
 use Inertia\Testing\AssertableInertia as Assert;
 use App\Models\User;
 use App\Models\Album;
@@ -105,10 +107,14 @@ it('can delete an existing album', function () {
 it('can view a list of albums', function () {
     $this->actingAs($this->user)
         ->get(route('albums.index'))
-        ->assertInertia(fn (Assert $page) => $page
+        ->assertInertia(
+            fn (Assert $page) => $page
             ->component('Albums/Index')
             ->has('filters')
-            ->has('albums.data', 1, fn ($page) => $page
+            ->has(
+                'albums.data',
+                1,
+                fn ($page) => $page
                 ->where('id', $this->album->id)
                 ->where('name', $this->album->name)
                 ->where('slug', $this->album->slug)
@@ -124,9 +130,12 @@ it('can view a list of albums', function () {
 it('can show a single album', function () {
     $this->actingAs($this->user)
         ->get(route('albums.show', $this->album))
-        ->assertInertia(fn (Assert $page) => $page
+        ->assertInertia(
+            fn (Assert $page) => $page
             ->component('Albums/Show')
-            ->has('album', fn ($page) => $page
+            ->has(
+                'album',
+                fn ($page) => $page
                 ->where('id', $this->album->id)
                 ->where('name', $this->album->name)
                 ->where('slug', $this->album->slug)

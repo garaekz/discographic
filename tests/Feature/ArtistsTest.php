@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature;
+
 use Inertia\Testing\AssertableInertia as Assert;
 use App\Models\Artist;
 use App\Models\Genre;

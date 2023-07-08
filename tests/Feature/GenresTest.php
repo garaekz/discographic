@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature;
+
 use Inertia\Testing\AssertableInertia as Assert;
 use App\Models\Genre;
 use App\Models\User;
@@ -20,6 +22,31 @@ it('returns genres table', function () {
                 ->where('id', $genres->last()->id)
                 ->where('name', $genres->last()->name)
                 ->where('slug', $genres->last()->slug)
+                ->etc()
+            )
+        );
+});
+
+it('properly searches by name or slug', function () {
+    $genre = Genre::factory()->create([
+        'name' => 'Special Genre Name',
+    ]);
+    $user = User::factory()->create();
+    $this->actingAs($user)
+        ->get(route('genres.index', [
+            'filter[search]' => 'special',
+        ]))
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+            ->component('Genres/Index')
+            ->has(
+                'genres.data',
+                1,
+                fn (Assert $page) => $page
+                ->where('id', $genre->id)
+                ->where('name', $genre->name)
+                ->where('slug', $genre->slug)
                 ->etc()
             )
         );
