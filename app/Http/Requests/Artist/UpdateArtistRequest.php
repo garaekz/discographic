@@ -23,7 +23,7 @@ class UpdateArtistRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|nullable|string|max:255|unique:artists,name,' . $this->artist->id,
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|max:1024',
             'region' => 'nullable|string|max:255',
             'bio' => 'nullable|string',
             'links' => 'nullable|array',

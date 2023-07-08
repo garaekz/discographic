@@ -23,7 +23,7 @@ class StoreArtistRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|max:1024',
             'region' => 'nullable|string|max:255',
             'bio' => 'nullable|string',
             'links' => 'nullable|array',

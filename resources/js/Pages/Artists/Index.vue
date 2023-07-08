@@ -29,8 +29,14 @@ const onCreate = () => {
 const onEdit = (artist) => {
     slideOut.value.visible = true;
     slideOut.value.title = 'Edit Artist';
-
-    form.value = { form, ...artist }
+    form.id = artist.id;
+    form.name = artist.name;
+    form.slug = artist.slug;
+    form.image = artist.image;
+    form.imagePreview = artist.image;
+    form.region = artist.region;
+    form.bio = artist.bio;
+    form.links = artist.links;
 };
 
 
@@ -41,13 +47,14 @@ const handleSlideoutClose = () => {
 };
 
 const form = useForm({
+    _method: 'POST',
     id: null,
     name: null,
     slug: null,
     image: null,
+    imagePreview: null,
     region: null,
     bio: null,
-    excerpt: null,
     links: null,
 });
 
@@ -57,19 +64,23 @@ const formSuccess = (message) => {
     toast.success(message);
 };
 
-const formError = (message) => {
+const formError = (message, err) => {
+    console.error(err);
     toast.error(message);
 };
 
 const submitForm = () => {
     if (form.id) {
-        form.put(route('artists.update', form.id), {
+        form._method = 'PUT';
+        form.post(route('artists.update', form.id), {
+            forceFormData: true,
             preserveScroll: true,
             onSuccess: () => formSuccess('Artist updated successfully!'),
-            onError: () => formError('An error occurred while trying to update the artist.'),
+            onError: (e) => formError('An error occurred while trying to update the artist.', e),
         });
     } else {
         form.post(route('artists.store'), {
+            forceFormData: true,
             preserveScroll: true,
             onSuccess: () => formSuccess('Artist created successfully!'),
             onError: () => formError('An error occurred while creating the artist.'),
@@ -93,12 +104,17 @@ const confirmDelete = async (id) => {
     }
 }
 
+const imageFile = ref(null);
+
 const handleFileDrop = (e) => {
+    if (imageFile.value) {
+        form.image = imageFile.value.files[0];
+    }
     const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.onload = (e) => {
-        form.image = e.target.result;
+        form.imagePreview = e.target.result;
     };
 
     reader.readAsDataURL(file);
@@ -142,10 +158,10 @@ const handleFileDrop = (e) => {
                     <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Artist Image
                     </label>
-                    <div v-if="form.image" class="flex">
+                    <div v-if="form.imagePreview" class="flex">
                         <div class="relative">
-                            <img :src="form.image" class="w-32 h-32 rounded-lg" />
-                            <button type="button" @click="form.image = null"
+                            <img :src="form.imagePreview" class="w-32 h-32 rounded-lg" />
+                            <button type="button" @click="form.image = null; form.imagePreview = null"
                                 class="absolute top-0 right-0 bg-red-600 hover:bg-red-700 focus:outline-none text-white rounded-full h-8 w-8 flex items-center justify-center -mt-2 -mr-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" class="h-5 w-5">
@@ -156,7 +172,7 @@ const handleFileDrop = (e) => {
                         </div>
                     </div>
                     <div v-else class="flex items-center justify-center w-full">
-                        <label for="dropzone-file"
+                        <label
                             class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -170,7 +186,7 @@ const handleFileDrop = (e) => {
                                 <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or Webp (MAX. 800x800px)
                                 </p>
                             </div>
-                            <input @change="handleFileDrop" id="dropzone-file" type="file" class="hidden" />
+                            <input @change="handleFileDrop" ref="imageFile" type="file" class="hidden" />
                         </label>
                     </div>
                 </div>
