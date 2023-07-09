@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/24/solid';
 import { XMarkIcon } from '@heroicons/vue/20/solid';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue';
@@ -10,7 +10,9 @@ const props = defineProps({
     modelValue: Array,
 });
 
-const selected = ref(props.modelValue);
+const selected = ref(props.options.filter((option) => {
+    return props.modelValue.some((opt) => opt.id === option.id);
+}));
 
 watch(selected, (newVal) => {
     emit('update:modelValue', newVal);
