@@ -6,10 +6,16 @@ use Inertia\Testing\AssertableInertia as Assert;
 use App\Models\Artist;
 use App\Models\Genre;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
-    $this->artist = Artist::factory()->create();
+    Storage::fake('public');
+    $image = UploadedFile::fake()->image('avatar.jpg', 400, 400)->size(100)->store('images/artists', 'public');
+    $this->artist = Artist::factory()->create([
+        'image' => $image,
+    ]);
 });
 
 it('renders the index page', function () {
@@ -36,15 +42,18 @@ it('creates a new artist', function () {
     $artist = Artist::factory()->make([
         'genres' => $genres->pluck('id')->toArray(),
     ]);
+    $payload = $artist->toArray();
+    $payload['image'] = UploadedFile::fake()->image('avatar.jpg', 400, 400)->size(100);
 
     $this->actingAs($this->user)
-        ->post(route('artists.store'), $artist->toArray())
+        ->post(route('artists.store'), $payload)
         ->assertRedirect(route('artists.index'))
         ->assertSessionHas('success', 'Artist created successfully');
 
     $this->assertDatabaseHas('artists', [
         'name' => $artist->name,
         'slug' => $artist->slug,
+        'image' => 'images/artists/' . $payload['image']->hashName(),
     ]);
 });
 
@@ -64,9 +73,11 @@ it('shows an artist', function () {
 
 it('updates an artist', function () {
     $artist = Artist::factory()->make();
+    $payload = $artist->toArray();
+    $payload['image'] = UploadedFile::fake()->image('avatar.jpg', 400, 400)->size(100);
 
     $this->actingAs($this->user)
-        ->put(route('artists.update', $this->artist->id), $artist->toArray())
+        ->put(route('artists.update', $this->artist->id), $payload)
         ->assertRedirect(route('artists.index'))
         ->assertSessionHas('success', 'Artist updated successfully');
 
@@ -74,7 +85,11 @@ it('updates an artist', function () {
         'id' => $this->artist->id,
         'name' => $artist->name,
         'slug' => $artist->slug,
+        'image' => 'images/artists/' . $payload['image']->hashName(),
     ]);
+
+    Storage::disk('public')->assertExists('images/artists/' . $payload['image']->hashName());
+    Storage::disk('public')->assertMissing($this->artist->image);
 });
 
 it('deletes an artist', function () {

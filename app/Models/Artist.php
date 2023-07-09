@@ -21,9 +21,26 @@ class Artist extends Model
         'links',
     ];
 
+    protected $appends = [
+        'image_url',
+    ];
+
     protected $casts = [
         'links' => 'array',
     ];
+
+    // accessors
+    public function getImageUrlAttribute(): string
+    {
+        return $this->image
+            ? asset('storage/' . $this->image)
+            : 'https://ui-avatars.com/api/?name='.$this->name.'&color=7F9CF5&background=EBF4FF';
+    }
+
+    public function albums(): MorphToMany
+    {
+        return $this->morphToMany(Album::class, 'albumable');
+    }
 
     public function genres(): MorphToMany
     {

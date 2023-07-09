@@ -8,9 +8,11 @@ import ArtistTable from '@/Components/Artists/ArtistTable.vue';
 import ConfirmationModal from '@/Components/Shared/ConfirmationModal.vue';
 import SlideOutPanel from '@/Components/Shared/SlideOutPanel.vue';
 import RichEditor from '@/Components/Shared/RichEditor.vue';
+import MultiSelect from '@/Components/Shared/MultiSelect.vue';
 
 defineProps({
     artists: Object,
+    genres: Object,
 });
 
 const confirm = ref(null);
@@ -32,11 +34,16 @@ const onEdit = (artist) => {
     form.id = artist.id;
     form.name = artist.name;
     form.slug = artist.slug;
-    form.image = artist.image;
-    form.imagePreview = artist.image;
+    form.imagePreview = artist.image_url;
     form.region = artist.region;
     form.bio = artist.bio;
     form.links = artist.links;
+    form.genres = artist.genres.map((genre) => {
+        return {
+            id: genre.id,
+            name: genre.name,
+        };
+    });
 };
 
 
@@ -56,6 +63,7 @@ const form = useForm({
     region: null,
     bio: null,
     links: null,
+    genres: [],
 });
 
 const formSuccess = (message) => {
@@ -70,6 +78,7 @@ const formError = (message, err) => {
 };
 
 const submitForm = () => {
+    form.genres = form.genres.map((genre) => genre.id) || [];
     if (form.id) {
         form._method = 'PUT';
         form.post(route('artists.update', form.id), {
@@ -129,7 +138,6 @@ const handleFileDrop = (e) => {
                 Artists
             </h2>
         </template>
-
         <SlideOutPanel :isOpen="slideOut.visible" :title="slideOut.title" @close="handleSlideoutClose">
             <form @submit.prevent="submitForm" class="space-y-4">
                 <div>
@@ -148,11 +156,17 @@ const handleFileDrop = (e) => {
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div>
-                    <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="region" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Region
                     </label>
-                    <input type="text" id="slug" v-model="form.region"
+                    <input type="text" id="region" v-model="form.region"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Genre
+                    </label>
+                    <MultiSelect :options="genres" v-model="form.genres" />
                 </div>
                 <div>
                     <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

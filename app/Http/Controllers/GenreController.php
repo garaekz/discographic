@@ -26,7 +26,7 @@ class GenreController extends Controller
             ->paginate();
 
         return Inertia::render('Genres/Index', [
-            'filters' => request()->all('search', 'trashed'),
+            'filters' => request()->all('filter[search]'),
             'genres' => $data,
         ]);
     }

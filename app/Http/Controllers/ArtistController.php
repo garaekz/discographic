@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Actions\SaveArtistAction;
+use App\Actions\UpdateArtistAction;
+use App\Filters\SearchFilter;
 use App\Http\Requests\Artist\StoreArtistRequest;
 use App\Http\Requests\Artist\UpdateArtistRequest;
 use App\Models\Artist;
+use App\Models\Genre;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ArtistController extends Controller
@@ -17,14 +21,17 @@ class ArtistController extends Controller
     public function index()
     {
         $data = QueryBuilder::for(Artist::class)
-            ->allowedFilters(['name', 'slug'])
-            ->allowedSorts(['name', 'slug'])
-            ->allowedFields(['name', 'slug'])
+            ->allowedFilters(
+                AllowedFilter::custom('search', new SearchFilter(), 'name,slug,region')
+            )
+            ->defaultSort('-id')
+            ->with('genres')
             ->paginate();
 
         return Inertia::render('Artists/Index', [
-            'filters' => request()->all('search', 'trashed'),
+            'filters' => request()->all('filter[search]'),
             'artists' => $data,
+            'genres' => Genre::select('id', 'name')->orderBy('id')->get(),
         ]);
     }
 
@@ -51,7 +58,7 @@ class ArtistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateArtistRequest $request, Artist $artist, SaveArtistAction $action)
+    public function update(UpdateArtistRequest $request, Artist $artist, UpdateArtistAction $action)
     {
         $artist = $action->execute($artist, $request->validated());
 
